@@ -6,9 +6,7 @@ local status_enum = {
 }
 local task = {
     name = 'afk', -- change to your choice of task name
-    status = status_enum['IDLE'],
-    debounce_time = -1,
-    debounce_timeout = 60
+    status = status_enum['IDLE']
 }
 
 local function get_azmodan_enemy()
@@ -28,12 +26,10 @@ end
 
 function task.Execute()
     local azmodan = get_azmodan_enemy()
-    local current_zone = get_current_world():get_current_zone_name()
     if azmodan ~= nil then
         explorerlite:set_custom_target(azmodan:get_position())
         explorerlite:move_to_target()
-    elseif current_zone == 'Hawe_Zarbinzet' then
-        if task.debounce_time + task.debounce_timeout > get_time_since_inject() then return end
+    else
         local center_position = vec3:new(-217.6220703125, 616.873046875, 22)
         explorerlite:set_custom_target(center_position)
         explorerlite:move_to_target()
