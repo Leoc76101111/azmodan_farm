@@ -6,7 +6,10 @@ local status_enum = {
 }
 local task = {
     name = 'afk', -- change to your choice of task name
-    status = status_enum['IDLE']
+    status = status_enum['IDLE'],
+    afk_position = vec3:new(-217.6220703125, 616.873046875, 22),
+    debounce_time = -1,
+    debounce_timeout = 5
 }
 
 local function get_azmodan_enemy()
@@ -20,6 +23,16 @@ local function get_azmodan_enemy()
     return nil
 end
 
+local function get_randomize_position()
+    if task.debounce_time + task.debounce_timeout > get_time_since_inject() then
+        return task.afk_position
+    end
+    local x = -217.6220703125 + math.random(-10,10)
+    local y = 616.873046875 + math.random(-10,10)
+    task.debounce_time = get_time_since_inject()
+    return vec3:new(x, y, 22)
+end
+
 function task.shouldExecute()
     return true
 end
@@ -30,8 +43,8 @@ function task.Execute()
         explorerlite:set_custom_target(azmodan:get_position())
         explorerlite:move_to_target()
     else
-        local center_position = vec3:new(-217.6220703125, 616.873046875, 22)
-        explorerlite:set_custom_target(center_position)
+        task.afk_position = get_randomize_position()
+        explorerlite:set_custom_target(task.afk_position)
         explorerlite:move_to_target()
     end
 end

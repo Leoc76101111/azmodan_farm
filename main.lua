@@ -17,7 +17,11 @@ local function main_pulse()
     if orbwalker.get_orb_mode() ~= 3 then
         orbwalker.set_clear_toggle(true);
     end
-    task_manager.execute_tasks()
+    if local_player:is_dead() then
+        revive_at_checkpoint()
+    else
+        task_manager.execute_tasks()
+    end
 end
 
 local function render_pulse()

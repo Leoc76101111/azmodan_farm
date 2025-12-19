@@ -7,6 +7,7 @@ local settings = {
     path_angle = 10,
     use_evade = false,
     aggresive_movement = false,
+    open_chest = false,
 }
 
 function settings.get_keybind_state()
@@ -27,6 +28,7 @@ end
 
 function settings:update_settings()
     settings.enabled = gui.elements.main_toggle:get()
+    settings.open_chest = gui.elements.chest_toggle:get()
 end
 
 return settings
