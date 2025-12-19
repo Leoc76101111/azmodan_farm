@@ -16,8 +16,8 @@ Once Azmodan is spawned, it will stick to the boss
 - added randomize position every 5 seconds
 - added alfred
 - add open chest 
-    - it checks your inventory for corrupted materails > 5
-    - priority = Andariel -> Belial -> Durial
+    - it checks your inventory for corrupted materails >= 5
+    - priority = depends on how you organize your inventory
 
 ## To do
 - add chest interaction
