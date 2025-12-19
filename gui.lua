@@ -14,12 +14,18 @@ gui.plugin_version = plugin_version
 gui.elements = {
     main_tree = tree_node:new(0),
     main_toggle = create_checkbox(false, 'main_toggle'),
-    chest_toggle = create_checkbox(false, 'main_toggle')
+    use_keybind = create_checkbox(false, 'use_keybind'),
+    keybind_toggle = keybind:new(0x0A, true, get_hash(plugin_label .. '_keybind_toggle' )),
+    chest_toggle = create_checkbox(false, 'main_toggle'),
 }
 function gui.render()
     if not gui.elements.main_tree:push('Azmodan Farm | Leoric | v' .. gui.plugin_version) then return end
     gui.elements.main_toggle:render('Enable', 'Enable azmodan farm')
     gui.elements.chest_toggle:render('Open Chest', 'Enable opening chest if enough materials')
+    gui.elements.use_keybind:render('Use keybind', 'Keybind to quick toggle the bot')
+    if gui.elements.use_keybind:get() then
+        gui.elements.keybind_toggle:render('Toggle Keybind', 'Toggle the bot for quick enable')
+    end
     gui.elements.main_tree:pop()
 end
 
