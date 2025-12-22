@@ -1,6 +1,7 @@
 local plugin_label = 'azmodan_farm' -- change to your plugin name
 
 local utils = require "core.utils"
+local settings = require 'core.settings'
 local explorerlite = require "core.explorerlite"
 
 local status_enum = {
@@ -12,12 +13,32 @@ local task = {
     name = 'interact_altar', -- change to your choice of task name
     status = status_enum.INIT
 }
+local key_id_altar_map = {
+    [2429465] = "S11_AzmodanTakeover_SummoningGizmo_1",
+    [2429469] = "S11_AzmodanTakeover_SummoningGizmo_2",
+    [2429471] = "S11_AzmodanTakeover_SummoningGizmo_3"
+}
 local function getInteractableAzmodanAltar()
+    local local_player = get_local_player()
+    if not local_player then return nil end
+    local consumables = local_player:get_consumable_items()
+    local altar_name = nil
+    for _, item in pairs(consumables) do
+        if key_id_altar_map[item:get_sno_id()] ~= nil and
+            item:get_stack_count() >= 1
+        then
+            if altar_name == nil then
+                altar_name = key_id_altar_map[item:get_sno_id()]
+            elseif key_id_altar_map[item:get_sno_id()]:gmatch(settings.priority) then
+                altar_name = key_id_altar_map[item:get_sno_id()]
+            end
+        end
+    end
     local actors = actors_manager:get_ally_actors()
     for _, actor in pairs(actors) do
         if actor:is_interactable() then
             local actor_name = actor:get_skin_name()
-            if actor_name == 'S11_AzmodanTakeover_SummoningGizmo_2' then
+            if actor_name == altar_name then
                 return actor
             end
         end

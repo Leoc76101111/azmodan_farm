@@ -13,7 +13,7 @@ local task = {
     name = 'open_chest', -- change to your choice of task name
     status = status_enum.INIT
 }
-local key_id_chest_name_map = {
+local key_id_chest_map = {
     [2429465] = "S11_AzmodanTakeover_Chest_Andariel",
     [2429469] = "S11_AzmodanTakeover_Chest_Belial",
     [2429471] = "S11_AzmodanTakeover_Chest_Duriel"
@@ -24,11 +24,14 @@ local function getInteractableChest()
     local consumables = local_player:get_consumable_items()
     local chest_name = nil
     for _, item in pairs(consumables) do
-        if key_id_chest_name_map[item:get_sno_id()] ~= nil and
-            item:get_stack_count() >= 5 and
-            chest_name == nil
+        if key_id_chest_map[item:get_sno_id()] ~= nil and
+            item:get_stack_count() >= 5
         then
-            chest_name = key_id_chest_name_map[item:get_sno_id()]
+            if chest_name == nil then
+                chest_name = key_id_chest_map[item:get_sno_id()]
+            elseif key_id_chest_map[item:get_sno_id()]:gmatch(settings.priority) then
+                chest_name = key_id_chest_map[item:get_sno_id()]
+            end
         end
     end
     local actors = actors_manager:get_ally_actors()

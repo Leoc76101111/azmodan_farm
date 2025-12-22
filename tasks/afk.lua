@@ -1,4 +1,5 @@
 local plugin_label = 'azmodan_farm' -- change to your plugin name
+
 local explorerlite = require "core.explorerlite"
 
 local status_enum = {
