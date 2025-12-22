@@ -1,7 +1,6 @@
 local plugin_label = 'azmodan_farm' -- change to your plugin name
 
 local utils = require "core.utils"
-local settings = require 'core.settings'
 local explorerlite = require "core.explorerlite"
 
 local status_enum = {
@@ -25,13 +24,10 @@ local function getInteractableAzmodanAltar()
     local altar_name = nil
     for _, item in pairs(consumables) do
         if key_id_altar_map[item:get_sno_id()] ~= nil and
-            item:get_stack_count() >= 1
+            item:get_stack_count() >= 1 and
+            altar_name == nil
         then
-            if altar_name == nil then
-                altar_name = key_id_altar_map[item:get_sno_id()]
-            elseif key_id_altar_map[item:get_sno_id()]:gmatch(settings.priority) then
-                altar_name = key_id_altar_map[item:get_sno_id()]
-            end
+            altar_name = key_id_altar_map[item:get_sno_id()]
         end
     end
     local actors = actors_manager:get_ally_actors()
