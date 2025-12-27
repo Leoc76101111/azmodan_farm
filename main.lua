@@ -34,13 +34,31 @@ local function main_pulse()
 end
 
 local function render_pulse()
-    if not (settings.get_keybind_state()) then return end
+    -- Only show any overlay if the master module is powered on
     if not local_player or not settings.enabled then return end
-    local current_task = task_manager.get_current_task()
-    if current_task then
-        local px, py, pz = player_position:x(), player_position:y(), player_position:z()
-        local draw_pos = vec3:new(px, py - 2, pz + 3)
-        graphics.text_3d("Current Task: " .. current_task.name, draw_pos, 14, color_white(255))
+
+    -- Determine screen width for positioning
+    local screen_width = 1920 
+    if graphics.get_screen_width then 
+        screen_width = graphics.get_screen_width() 
+    end
+    
+    -- Positioning: 1/4 from the left, top corner area
+    local status_pos = vec2:new(screen_width / 4, 25)
+
+    -- Status Overlay Logic
+    local is_running = settings.get_keybind_state()
+    if is_running then
+        graphics.text_2d("AZMODAN BOT: RUNNING", status_pos, 18, color_green(255))
+        
+        -- Display the current task above the player's head
+        local current_task = task_manager.get_current_task()
+        if current_task then
+            local px, py, pz = player_position:x(), player_position:y(), player_position:z()
+            graphics.text_3d("Current Task: " .. current_task.name, vec3:new(px, py - 2, pz + 3), 14, color_white(255))
+        end
+    else
+        graphics.text_2d("AZMODAN BOT: STANDBY", status_pos, 18, color_yellow(255))
     end
 end
 
