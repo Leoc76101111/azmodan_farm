@@ -1,14 +1,20 @@
-local plugin_label = 'azmodan_farm' -- change to your plugin name
-
+local plugin_label = 'azmodan_farm' 
 local utils = require "core.utils"
+local tracker = require "core.tracker"
 
 local status_enum = {
     IDLE = 'idle'
 }
+
 local task = {
-    name = 'walk', -- change to your choice of task name
+    name = 'walk', 
     status = status_enum['IDLE']
 }
+
+-- Target fight center
+local fight_center = vec3:new(-217.622, 616.873, 22)
+
+-- Path from Zarbinzet portal to the fighting area
 local path = {
     vec3:new(-238.117188, 386.241211, 52.762695),
     vec3:new(-239.066010, 388.562531, 52.710041),
@@ -132,6 +138,7 @@ local path = {
     vec3:new(-220.016922, 614.879028, 22.000000),
     vec3:new(-218.126999, 616.616455, 22.000000),
 }
+
 local function get_azmodan_enemy()
     local player_pos = get_player_position()
     local enemies = target_selector.get_near_target_list(player_pos, 15)
@@ -144,28 +151,37 @@ local function get_azmodan_enemy()
 end
 
 function task.shouldExecute()
-    return (utils.player_in_zone('Hawe_Zarbinzet') or
-        utils.player_in_zone('Hawe_WorldBoss')) and
-        utils.distance_to(vec3:new(-217.6220703125, 616.873046875, 22)) > 30 and
-        get_azmodan_enemy() == nil
+    -- Recovery Check: If we are far from the boss regardless of zone
+    local needs_recovery = utils.distance_to(fight_center) > 25
+    
+    -- Priority Check: Don't walk if Alfred is busy
+    local alfred_busy = tracker.is_stashing or tracker.is_selling or tracker.is_depositing
+    
+    return needs_recovery and not alfred_busy and get_azmodan_enemy() == nil
 end
 
 function task.Execute()
+    -- Ensure Orbwalker doesn't lock movement for combat
     if orbwalker.get_orb_mode() == 3 then
-        orbwalker.set_clear_toggle(false);
+        orbwalker.set_clear_toggle(false)
     end
+
     local closest_distance = nil
     local closest_key = nil
-    for key,point in pairs(path) do
-        if closest_distance == nil or utils.distance_to(point) < closest_distance then
-            closest_distance = utils.distance_to(point)
+    
+    -- Identify the nearest breadcrumb
+    for key, point in pairs(path) do
+        local dist = utils.distance_to(point)
+        if closest_distance == nil or dist < closest_distance then
+            closest_distance = dist
             closest_key = key
         end
     end
-    if path[closest_key+2] ~= nil then
-        pathfinder.request_move(path[closest_key+2])
-    elseif path[closest_key+1] ~= nil then
-        pathfinder.request_move(path[closest_key+1])
+
+    -- Pathfind by moving ahead in the coordinate sequence
+    local target_point = path[closest_key + 2] or path[closest_key + 1] or fight_center
+    if target_point then
+        pathfinder.request_move(target_point)
     end
 end
 
