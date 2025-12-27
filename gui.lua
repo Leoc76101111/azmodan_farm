@@ -19,11 +19,10 @@ gui.elements = {
     main_tree = tree_node:new(0),
     main_toggle = create_checkbox(false, 'main_toggle'),
     use_keybind = create_checkbox(false, 'use_keybind'),
-    keybind_toggle = keybind:new(0x0A, true, get_hash(plugin_label .. '_keybind_toggle' )),
-    -- Fixed: Changed key to 'chest_toggle' to prevent conflict with main_toggle
-    chest_toggle = create_checkbox(false, 'chest_toggle'), 
+    keybind_toggle = keybind:new(0xDE, true, get_hash(plugin_label .. '_keybind_toggle' )), -- Key: '
+    chest_toggle = create_checkbox(false, 'chest_toggle'), -- Corrected key to prevent conflict
     priority = combo_box:new(1, get_hash(plugin_label .. '_priority')),
-    drop_sigil_keybind = keybind:new(0x0A, true, get_hash(plugin_label .. '_drop_sigil_keybind' )),
+    drop_sigil_keybind = keybind:new(0xBA, true, get_hash(plugin_label .. '_drop_sigil_keybind' )), -- Key: ;
 }
 
 function gui.render()
@@ -39,9 +38,9 @@ function gui.render()
     
     gui.elements.chest_toggle:render('Open Chest', 'Enable opening chest if enough materials')
     
-    -- Contextual display: Only show priority if chest opening is enabled
+    -- Only show priority if chest opening is enabled
     if gui.elements.chest_toggle:get() then
-        gui.elements.priority:render('Chest Priority', gui.priority_options, 'Select reward priority')
+        gui.elements.priority:render('Chest Priority', gui.priority_options, "Select boss reward priority")
     end
     
     gui.elements.main_tree:pop()
