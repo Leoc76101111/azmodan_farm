@@ -1,14 +1,7 @@
 local task_manager = {}
 local tasks = {}
 local current_task = { name = 'Idle', status = 'Idle' } -- Default state when no task is active
-local finished_time = 0
 
-function task_manager.set_finished_time(time)
-    finished_time = time
-end
-function task_manager.get_finished_time()
-    return finished_time
-end
 function task_manager.register_task(task)
     table.insert(tasks, task)
 end

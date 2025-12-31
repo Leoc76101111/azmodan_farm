@@ -65,13 +65,14 @@ local function interact_npc(npc)
     if npc then
         interact_object(npc)
         task.last_opened = get_time_since_inject()
+        task.current_state = status_enum.WAITING
     end
 end
 local function wait_for_loot(npc)
     if npc then
         interact_object(npc)
     end
-    if task.last_opened + 10 >= get_time_since_inject() then
+    if task.last_opened + 10 < get_time_since_inject() then
         task.current_state = status_enum.INIT
     end
 end

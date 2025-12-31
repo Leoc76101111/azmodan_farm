@@ -1,5 +1,5 @@
 local plugin_label = 'azmodan_farm'
-local plugin_version = '1.0.7'
+local plugin_version = '1.0.8'
 
 local gui = {}
 

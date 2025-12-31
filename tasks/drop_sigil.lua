@@ -30,7 +30,7 @@ function task.Execute()
             end
         end
     end
-    if task.last_drop + 10 < get_time_since_inject() then
+    if task.last_drop + 5 < get_time_since_inject() then
         if task.reset_orbwalker_clear then
             orbwalker.set_clear_toggle(true);
         end
