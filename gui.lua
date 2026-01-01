@@ -1,5 +1,5 @@
 local plugin_label = 'azmodan_farm'
-local plugin_version = '1.0.8'
+local plugin_version = '1.0.9'
 
 local gui = {}
 
@@ -20,7 +20,7 @@ gui.elements = {
     main_toggle = create_checkbox(false, 'main_toggle'),
     use_keybind = create_checkbox(false, 'use_keybind'),
     keybind_toggle = keybind:new(0x0A, true, get_hash(plugin_label .. '_keybind_toggle' )),
-    chest_toggle = create_checkbox(false, 'main_toggle'),
+    chest_toggle = create_checkbox(false, 'chest_toggle'),
     priority = combo_box:new(1, get_hash(plugin_label .. '_priority')),
     drop_sigil_keybind = keybind:new(0x0A, true, get_hash(plugin_label .. '_drop_sigil_keybind' )),
 }
