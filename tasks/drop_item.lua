@@ -23,6 +23,7 @@ function task.Execute()
             loot_manager.drop_item(item)
         end
     end
+    tracker.drop_items = false
 end
 
 return task
