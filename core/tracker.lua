@@ -3,7 +3,8 @@ local plugin_label = 'azmodan_farm'
 
 local tracker = {
     name        = plugin_label,
-    drop_sigils = false
+    drop_sigils = false,
+    drop_items = false
 }
 
 return tracker

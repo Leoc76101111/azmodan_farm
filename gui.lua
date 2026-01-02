@@ -1,5 +1,5 @@
 local plugin_label = 'azmodan_farm'
-local plugin_version = '1.0.9'
+local plugin_version = '1.0.10'
 
 local gui = {}
 
@@ -23,6 +23,7 @@ gui.elements = {
     chest_toggle = create_checkbox(false, 'chest_toggle'),
     priority = combo_box:new(1, get_hash(plugin_label .. '_priority')),
     drop_sigil_keybind = keybind:new(0x0A, true, get_hash(plugin_label .. '_drop_sigil_keybind' )),
+    drop_item_keybind = keybind:new(0x0A, true, get_hash(plugin_label .. '_drop_item_keybind' )),
 }
 function gui.render()
     if not gui.elements.main_tree:push('Azmodan Farm | Leoric | v' .. gui.plugin_version) then return end
@@ -31,6 +32,7 @@ function gui.render()
     if gui.elements.use_keybind:get() then
         gui.elements.keybind_toggle:render('Toggle Keybind', 'Toggle the bot for quick enable')
         gui.elements.drop_sigil_keybind:render('Drop non-favourite Sigils', 'Press to drop non-favourite sigils')
+        gui.elements.drop_item_keybind:render('Drop non-favourite equipment', 'Press to drop non-favourite equipment')
     end
     gui.elements.chest_toggle:render('Open Chest', 'Enable opening chest if enough materials')
     gui.elements.priority:render('Chest Priority', gui.priority_options, 'Select which test to priortize')

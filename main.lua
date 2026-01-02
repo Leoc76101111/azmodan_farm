@@ -22,9 +22,15 @@ local function main_pulse()
         tracker.drop_sigils = true
         task_manager.execute_tasks()
     end
+    if gui.elements.drop_item_keybind:get_state() == 1 then
+        if debounce_time ~= nil and debounce_time + debounce_timeout > get_time_since_inject() then return end
+        gui.elements.drop_item_keybind:set(false)
+        tracker.drop_items = true
+        task_manager.execute_tasks()
+    end
 
     settings:update_settings()
-    if (not settings.enabled or not settings.get_keybind_state()) and not tracker.drop_sigils then return end
+    if (not settings.enabled or not settings.get_keybind_state()) then return end
 
     if local_player:is_dead() then
         revive_at_checkpoint()
