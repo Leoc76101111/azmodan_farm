@@ -4,7 +4,9 @@ local plugin_label = 'azmodan_farm'
 local tracker = {
     name        = plugin_label,
     drop_sigils = false,
-    drop_items = false
+    drop_items = false,
+    azmodan_start = nil,
+    azmodan_timer = {}
 }
 
 return tracker

@@ -1,6 +1,7 @@
 local plugin_label = 'azmodan_farm' -- change to your plugin name
 
 local explorerlite = require "core.explorerlite"
+local tracker = require "core.tracker"
 
 local status_enum = {
     IDLE = 'idle'
@@ -44,6 +45,9 @@ function task.Execute()
     end
     local azmodan = get_azmodan_enemy()
     if azmodan ~= nil then
+        if tracker.azmodan_start == nil then
+            tracker.azmodan_start = os.clock()
+        end
         explorerlite:set_custom_target(azmodan:get_position())
         explorerlite:move_to_target()
     else

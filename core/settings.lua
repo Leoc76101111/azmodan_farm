@@ -8,7 +8,8 @@ local settings = {
     use_evade = false,
     aggresive_movement = false,
     open_chest = false,
-    priority = 'Belial'
+    priority = 'Belial',
+    track_kill = false,
 }
 
 function settings.get_keybind_state()
@@ -31,6 +32,7 @@ function settings:update_settings()
     settings.enabled = gui.elements.main_toggle:get()
     settings.open_chest = gui.elements.chest_toggle:get()
     settings.priority = gui.priority_options[gui.elements.priority:get()+1]
+    settings.track_kill = gui.elements.kill_tracker_toggle:get()
 end
 
 return settings

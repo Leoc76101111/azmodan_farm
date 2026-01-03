@@ -48,6 +48,20 @@ local function render_pulse()
         local draw_pos = vec3:new(px, py - 2, pz + 3)
         graphics.text_3d("Current Task: " .. current_task.name, draw_pos, 14, color_white(255))
     end
+    if settings.track_kill then
+        local x_pos = get_screen_width() - 20 - (33 * 11)
+        local y_pos = get_screen_height() - 160 - (#tracker.azmodan_timer * 20)
+        if #tracker.azmodan_timer == 0 then
+            local msg = 'Azmodan kill time : no kills yet'
+            graphics.text_2d(msg, vec2:new(x_pos, y_pos), 20, color_white(255))
+        end
+
+        for _, timer in ipairs(tracker.azmodan_timer) do
+            local msg = 'Azmodan kill time : ' .. timer
+            graphics.text_2d(msg, vec2:new(x_pos, y_pos), 20, color_white(255))
+            y_pos = y_pos + 20
+        end
+    end
 end
 
 on_update(function()

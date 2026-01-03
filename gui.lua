@@ -1,5 +1,5 @@
 local plugin_label = 'azmodan_farm'
-local plugin_version = '1.0.10'
+local plugin_version = '1.0.11'
 
 local gui = {}
 
@@ -24,6 +24,7 @@ gui.elements = {
     priority = combo_box:new(1, get_hash(plugin_label .. '_priority')),
     drop_sigil_keybind = keybind:new(0x0A, true, get_hash(plugin_label .. '_drop_sigil_keybind' )),
     drop_item_keybind = keybind:new(0x0A, true, get_hash(plugin_label .. '_drop_item_keybind' )),
+    kill_tracker_toggle = create_checkbox(false, 'kill_tracker_toggle'),
 }
 function gui.render()
     if not gui.elements.main_tree:push('Azmodan Farm | Leoric | v' .. gui.plugin_version) then return end
@@ -35,7 +36,10 @@ function gui.render()
         gui.elements.drop_item_keybind:render('Drop non-favourite equipment', 'Press to drop non-favourite equipment')
     end
     gui.elements.chest_toggle:render('Open Chest', 'Enable opening chest if enough materials')
-    gui.elements.priority:render('Chest Priority', gui.priority_options, 'Select which test to priortize')
+    if gui.elements.chest_toggle:get() then
+        gui.elements.priority:render('Chest Priority', gui.priority_options, 'Select which test to priortize')
+    end
+    gui.elements.kill_tracker_toggle:render('show kill tracker', 'Enable to show azmodan kill time, it disappears if u reload/relogin')
     gui.elements.main_tree:pop()
 end
 

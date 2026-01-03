@@ -11,6 +11,9 @@ Once Azmodan is spawned, it will stick to the boss
 - Afk
 
 ## Changelog
+### V1.0.11
+- added kill time tracker
+
 ### V1.0.10
 - added drop items keybind (equipments)
 
