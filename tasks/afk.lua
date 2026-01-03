@@ -16,7 +16,7 @@ local task = {
 
 local function get_azmodan_enemy()
     local player_pos = get_player_position()
-    local enemies = target_selector.get_near_target_list(player_pos, 15)
+    local enemies = target_selector.get_near_target_list(player_pos, 50)
     for _, enemy in pairs(enemies) do
         if enemy.get_skin_name(enemy) == 'Azmodan_EventBoss' then
             return enemy

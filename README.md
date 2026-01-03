@@ -1,5 +1,5 @@
 # Azmodan Farm
-#### V1.0.10
+#### V1.0.12
 ## Description
 A very simple script to farm azmodan divine blessing level.
 All it does is interact belial altar to start event, stand afk in center while waiting for Azmodan to spawn. 
@@ -11,6 +11,9 @@ Once Azmodan is spawned, it will stick to the boss
 - Afk
 
 ## Changelog
+### V1.0.12
+- extend range to find azmodan so timer doesnt reset mid way
+
 ### V1.0.11
 - added kill time tracker
 
