@@ -2,6 +2,7 @@ local plugin_label = 'azmodan_farm' -- change to your plugin name
 
 local explorerlite = require "core.explorerlite"
 local tracker = require "core.tracker"
+local utils = require "core.utils"
 
 local status_enum = {
     IDLE = 'idle'
@@ -49,6 +50,9 @@ function task.Execute()
             tracker.azmodan_start = os.clock()
         end
         explorerlite:set_custom_target(azmodan:get_position())
+        explorerlite:move_to_target()
+    elseif utils.distance_to(vec3:new(-217.6220703125, 616.873046875, 22)) > 30 then
+        explorerlite:set_custom_target(vec3:new(-217.6220703125, 616.873046875, 22))
         explorerlite:move_to_target()
     else
         task.afk_position = get_randomize_position()

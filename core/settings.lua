@@ -10,6 +10,7 @@ local settings = {
     open_chest = false,
     priority = 'Belial',
     track_kill = false,
+    use_alfred = true
 }
 
 function settings.get_keybind_state()
@@ -33,6 +34,7 @@ function settings:update_settings()
     settings.open_chest = gui.elements.chest_toggle:get()
     settings.priority = gui.priority_options[gui.elements.priority:get()+1]
     settings.track_kill = gui.elements.kill_tracker_toggle:get()
+    settings.use_alfred = gui.elements.use_alfred:get()
 end
 
 return settings

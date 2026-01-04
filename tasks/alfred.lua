@@ -36,7 +36,7 @@ end
 
 function task.shouldExecute()
     local status = {enabled = false}
-    if AlfredTheButlerPlugin then
+    if AlfredTheButlerPlugin and settings.use_alfred then
         status = AlfredTheButlerPlugin.get_status()
         -- add additional conditions to trigger if required
         if (status.enabled and status.need_trigger) or
@@ -45,30 +45,18 @@ function task.shouldExecute()
         then
             return true
         end
-    elseif PLUGIN_alfred_the_butler then
-        status = PLUGIN_alfred_the_butler.get_status()
-        if status.enabled and (
-            status.inventory_full or
-            status.restock_count > 0 or
-            status.need_repair or
-            status.teleport or
-            task.status == status_enum['WAITING'] or
-            task.status == status_enum['LOOTING']
-        ) then
-            return true
-        end
     end
     return false
 end
 
 function task.Execute()
+    if orbwalker.get_orb_mode() == 3 then
+        orbwalker.set_clear_toggle(false);
+    end
     if task.status == status_enum['IDLE'] then
         if AlfredTheButlerPlugin then
             AlfredTheButlerPlugin.resume()
             AlfredTheButlerPlugin.trigger_tasks_with_teleport(plugin_label,reset)
-        elseif PLUGIN_alfred_the_butler then
-            PLUGIN_alfred_the_butler.resume()
-            PLUGIN_alfred_the_butler.trigger_tasks_with_teleport(plugin_label,reset)
         end
         task.status = status_enum['WAITING']
     elseif task.status == status_enum['LOOTING'] and get_time_since_inject() > loot_start + loot_timeout then
@@ -80,8 +68,7 @@ function task.Execute()
     end
 end
 
-if settings.enabled and
-    (AlfredTheButlerPlugin or PLUGIN_alfred_the_butler)
+if settings.enabled and AlfredTheButlerPlugin
 then
     -- do an initial reset
     reset()

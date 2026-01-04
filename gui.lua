@@ -1,5 +1,5 @@
 local plugin_label = 'azmodan_farm'
-local plugin_version = '1.0.12'
+local plugin_version = '1.0.13'
 
 local gui = {}
 
@@ -25,6 +25,7 @@ gui.elements = {
     drop_sigil_keybind = keybind:new(0x0A, true, get_hash(plugin_label .. '_drop_sigil_keybind' )),
     drop_item_keybind = keybind:new(0x0A, true, get_hash(plugin_label .. '_drop_item_keybind' )),
     kill_tracker_toggle = create_checkbox(false, 'kill_tracker_toggle'),
+    use_alfred = create_checkbox(true, 'use_alfred'),
 }
 function gui.render()
     if not gui.elements.main_tree:push('Azmodan Farm | Leoric | v' .. gui.plugin_version) then return end
@@ -40,6 +41,7 @@ function gui.render()
         gui.elements.priority:render('Chest Priority', gui.priority_options, 'Select which test to priortize')
     end
     gui.elements.kill_tracker_toggle:render('show kill tracker', 'Enable to show azmodan kill time, it disappears if u reload/relogin')
+    gui.elements.use_alfred:render('use alfred', 'enable alfred integration')
     gui.elements.main_tree:pop()
 end
 
